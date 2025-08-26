@@ -63,6 +63,11 @@ dist
 # React build
 build/
 
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
 # MacOS
 .DS_Store
 

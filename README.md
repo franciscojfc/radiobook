@@ -56,19 +56,39 @@ npm run dev
 
 ## Funcionalidades
 
-- **Frontend (React)**: Muestra un mensaje "Hola Mundo" y permite conectar con el backend
-- **Backend (Express)**: API REST que retorna mensajes en formato JSON
-- **Comunicación**: El frontend puede hacer peticiones al backend a través de la API
+- **Frontend (React)**: Muestra una historia aleatoria de la base de datos con información del autor, año y contenido
+- **Backend (Express)**: API REST con base de datos SQLite para gestionar historias
+- **Base de Datos**: SQLite local con tabla de historias que incluye datos fake
+- **Comunicación**: El frontend obtiene historias aleatorias del backend a través de la API
 
 ## API Endpoints
 
 - `GET /` - Mensaje de bienvenida
-- `GET /api/hello` - Endpoint principal que retorna datos JSON
+- `GET /api/hello` - Endpoint de prueba que retorna datos JSON
+- `GET /api/stories` - Obtener todas las historias
+- `GET /api/stories/random` - Obtener una historia aleatoria
+- `GET /api/stories/:id` - Obtener una historia específica por ID
+- `POST /api/stories` - Crear una nueva historia
+
+## Base de Datos
+
+El proyecto incluye una base de datos SQLite local (`backend/radiobook.db`) con la siguiente estructura:
+
+### Tabla: stories
+- `id` - Identificador único (INTEGER PRIMARY KEY AUTOINCREMENT)
+- `created_at` - Fecha de creación (DATETIME DEFAULT CURRENT_TIMESTAMP)
+- `publication_year` - Año de publicación (INTEGER NOT NULL)
+- `author` - Autor de la historia (TEXT NOT NULL)
+- `title` - Título de la historia (TEXT NOT NULL)
+- `content` - Contenido de la historia (TEXT NOT NULL)
+
+La base de datos se inicializa automáticamente con 8 historias de ejemplo de autores latinoamericanos reconocidos.
 
 ## Tecnologías Utilizadas
 
-- **Backend**: Node.js, Express.js, CORS
+- **Backend**: Node.js, Express.js, CORS, SQLite3, Better-SQLite3
 - **Frontend**: React, Create React App
+- **Base de Datos**: SQLite (local)
 - **Desarrollo**: Nodemon, Concurrently
 
 ## Próximos Pasos
