@@ -6,6 +6,7 @@ function App() {
   const [backendData, setBackendData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [storyLoading, setStoryLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Cargar historia aleatoria al iniciar
   useEffect(() => {
@@ -14,16 +15,37 @@ function App() {
 
   const fetchRandomStory = async () => {
     setStoryLoading(true);
+    setError(null);
     try {
-      const response = await fetch('/api/stories/random');
+      console.log('Fetching random story...');
+      // Usar URL absoluta directamente
+      const response = await fetch('http://localhost:3001/api/stories/random', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
-      if (data.success) {
+      console.log('Response data:', data);
+      
+      if (data.success && data.data) {
         setRandomStory(data.data);
+        console.log('Story set successfully:', data.data);
       } else {
-        console.error('Error cargando historia:', data.message);
+        console.error('Error en respuesta:', data.message || 'Sin datos');
+        setError('Error en la respuesta del servidor');
       }
     } catch (error) {
       console.error('Error conectando con el backend:', error);
+      setError(`Error de conexión: ${error.message}`);
     } finally {
       setStoryLoading(false);
     }
@@ -32,7 +54,12 @@ function App() {
   const fetchBackendData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/hello');
+      const response = await fetch('http://localhost:3001/api/hello', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const data = await response.json();
       setBackendData(data);
     } catch (error) {
@@ -53,6 +80,13 @@ function App() {
           <h2>Historia del Día</h2>
           {storyLoading ? (
             <div className="loading">Cargando historia...</div>
+          ) : error ? (
+            <div className="story-error">
+              <p>Error: {error}</p>
+              <button onClick={fetchRandomStory} className="retry-button">
+                🔄 Reintentar
+              </button>
+            </div>
           ) : randomStory ? (
             <div className="story-card">
               <h3 className="story-title">"{randomStory.title}"</h3>
