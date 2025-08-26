@@ -80,3 +80,28 @@ Este es un proyecto base que puedes extender con:
 - Estado global (Redux, Context API)
 - Testing
 - Deployment
+
+## Subir a GitHub
+
+Para subir este proyecto a tu GitHub personal:
+
+1. **Crear un nuevo repositorio en GitHub:**
+   - Ve a https://github.com/new
+   - Nombre: `radiobook` (o el nombre que prefieras)
+   - Descripción: "Full-stack Hello World app with Node.js/Express backend and React frontend"
+   - Mantén el repositorio como público o privado según prefieras
+   - **NO** marques "Add a README file", "Add .gitignore", o "Choose a license" (ya los tenemos)
+
+2. **Conectar y subir el proyecto:**
+   ```bash
+   git remote add origin https://github.com/TU_USUARIO/radiobook.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+   Reemplaza `TU_USUARIO` con tu nombre de usuario de GitHub.
+
+3. **Verificar que se subió correctamente:**
+   - Ve a tu repositorio en GitHub
+   - Deberías ver todos los archivos del proyecto
+   - El README.md se mostrará automáticamente en la página principal
